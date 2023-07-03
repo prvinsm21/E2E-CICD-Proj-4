@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hexashop-webapp
+  labels:
+    app: hexashop-webapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hexashop-webapp
+  template:
+    metadata:
+      labels:
+        app: hexashop-webapp
+    spec:
+      containers:
+      - name: hexashop-webapp
+        image: prvinsm21/hexashop-webapp:replaceImageTag
+        ports:
+        - containerPort: 8080
