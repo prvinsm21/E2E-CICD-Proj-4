@@ -1,18 +1,66 @@
 (function ($) {
 	
 	"use strict";
+	$('.owl-men-item').owlCarousel({
+		items:5,
+		loop:true,
+		dots: true,
+		nav: true,
+		margin:30,
+		  responsive:{
+			  0:{
+				  items:1
+			  },
+			  600:{
+				  items:2
+			  },
+			  1000:{
+				  items:3
+			  }
+		 }
+	})
 
-	// Page loading animation
-	$(window).on('load', function() {
+	$('.owl-women-item').owlCarousel({
+		items:5,
+		loop:true,
+		dots: true,
+		nav: true,
+		margin:30,
+		  responsive:{
+			  0:{
+				  items:1
+			  },
+			  600:{
+				  items:2
+			  },
+			  1000:{
+				  items:3
+			  }
+		 }
+	 })
 
-        $('#js-preloader').addClass('loaded');
-
-    });
-
+	$('.owl-kid-item').owlCarousel({
+		items:5,
+		loop:true,
+		dots: true,
+		nav: true,
+		margin:30,
+		  responsive:{
+			  0:{
+				  items:1
+			  },
+			  600:{
+				  items:2
+			  },
+			  1000:{
+				  items:3
+			  }
+		 }
+	 })
 
 	$(window).scroll(function() {
 	  var scroll = $(window).scrollTop();
-	  var box = $('.header-text').height();
+	  var box = $('#top').height();
 	  var header = $('header').height();
 
 	  if (scroll >= box - header) {
@@ -20,41 +68,16 @@
 	  } else {
 	    $("header").removeClass("background-header");
 	  }
-	})
+	});
+	
 
-	var width = $(window).width();
-		$(window).resize(function() {
-		if (width > 767 && $(window).width() < 767) {
-			location.reload();
-		}
-		else if (width < 767 && $(window).width() > 767) {
-			location.reload();
-		}
-	})
+	// Window Resize Mobile Menu Fix
+	mobileNav();
 
-	const elem = document.querySelector('.trending-box');
-	const filtersElem = document.querySelector('.trending-filter');
-	if (elem) {
-		const rdn_events_list = new Isotope(elem, {
-			itemSelector: '.trending-items',
-			layoutMode: 'masonry'
-		});
-		if (filtersElem) {
-			filtersElem.addEventListener('click', function(event) {
-				if (!matchesSelector(event.target, 'a')) {
-					return;
-				}
-				const filterValue = event.target.getAttribute('data-filter');
-				rdn_events_list.arrange({
-					filter: filterValue
-				});
-				filtersElem.querySelector('.is_active').classList.remove('is_active');
-				event.target.classList.add('is_active');
-				event.preventDefault();
-			});
-		}
-	}
 
+	// Scroll animation init
+	window.sr = new scrollReveal();
+	
 
 	// Menu Dropdown Toggle
 	if($('.menu-trigger').length){
@@ -84,6 +107,46 @@
 		}
 	});
 
+	$(document).ready(function () {
+	    $(document).on("scroll", onScroll);
+	    
+	    //smoothscroll
+	    $('.scroll-to-section a[href^="#"]').on('click', function (e) {
+	        e.preventDefault();
+	        $(document).off("scroll");
+	        
+	        $('.scroll-to-section a').each(function () {
+	            $(this).removeClass('active');
+	        })
+	        $(this).addClass('active');
+	      
+	        var target = this.hash,
+	        menu = target;
+	       	var target = $(this.hash);
+	        $('html, body').stop().animate({
+	            scrollTop: (target.offset().top) - 79
+	        }, 500, 'swing', function () {
+	            window.location.hash = target;
+	            $(document).on("scroll", onScroll);
+	        });
+	    });
+	});
+
+	function onScroll(event){
+	    var scrollPos = $(document).scrollTop();
+	    $('.nav a').each(function () {
+	        var currLink = $(this);
+	        var refElement = $(currLink.attr("href"));
+	        if (refElement.position().top <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
+	            $('.nav ul li a').removeClass("active");
+	            currLink.addClass("active");
+	        }
+	        else{
+	            currLink.removeClass("active");
+	        }
+	    });
+	}
+
 
 	// Page loading animation
 	$(window).on('load', function() {
@@ -102,7 +165,24 @@
 			}, 300);
 		});
 	});
-    
+
+
+	// Window Resize Mobile Menu Fix
+	$(window).on('resize', function() {
+		mobileNav();
+	});
+
+
+	// Window Resize Mobile Menu Fix
+	function mobileNav() {
+		var width = $(window).width();
+		$('.submenu').on('click', function() {
+			if(width < 767) {
+				$('.submenu ul').removeClass('active');
+				$(this).find('ul').toggleClass('active');
+			}
+		});
+	}
 
 
 })(window.jQuery);
