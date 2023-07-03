@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: hexashop-webapp
-        image: prvinsm21/hexashop-site:replaceImageTag
+        image: prvinsm21/hexashop-site:4
         ports:
         - containerPort: 8080
